@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Catami Prototype</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Le styles -->
+    <link rel="stylesheet" href="./assets/css/jquery-ui-1.8.23.custom.css" type="text/css">
+    <link rel="stylesheet" href="./assets/css/bootstrap.css" type="text/css" >
+    <link rel="stylesheet" href="./assets/css/fullscreenMap.css" type="text/css">
+    <link rel="stylesheet" href="./assets/css/overlay-basic.css" type="text/css">
+
+    <style>
+      body {padding-top: 40px; /* 60px to make the container go all the way to the bottom of the topbar */}
+      #map_container { height: 1000px; width: 100%;}
+      img.olTileImage { max-width: 256px !important; }
+      div.contentWrap { height:800px; overflow-y:auto;}
+      .sidebar-nav {
+          padding: 9px 0;
+      }
+      a.toggles {
+          position:fixed;
+          left:0;
+          bottom:0;
+          display:block;
+          background-color:black;
+          color:white;
+          padding:10px 20px;
+      }
+      .no-sidebar {
+          margin-left:0 !important;
+      }
+​
+    </style>
+    <link href="./assets/css/bootstrap-responsive.css" rel="stylesheet">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le fav and touch icons -->
+    <link rel="shortcut icon" href="./assets/ico/favicon.ico">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="./assets/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="./assets/ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="./assets/ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="./assets/ico/apple-touch-icon-57-precomposed.png">
+
+  </head>
+
+  <body>
+
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="./frontend.html">Catami</a>
+          <div class="nav-collapse collapse">
+            <ul class="nav">
+              <li class="active"><a href="./frontend.html">Home</a></li>
+              <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                     <b class="caret"></b>
+                      Interfaces
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a  href="./discover.html"><i class="icon-search"></i> Discovery</a></li>
+                        <li><a  href="./analysis.html"><i class="icon-filter"></i> Analysis</a></li>
+                        <li><a  href="./collaboration.html"><i class="icon-comment"></i> Collaboration</a></li>
+                        <li><a  href="./project.html"><i class="icon-wrench"></i> Project View</a></li>
+                        <li><a  href="./viewImageSeries.html"><i class="icon-picture"></i> Image View</a></li>
+                        <li><a  href="./viewMovie.html"><i class="icon-film"></i> Movie View</a></li>
+                        <li><a  href="./userPreferences.html"><i class="icon-user"></i> User Preferences</a></li>
+                        <li><a  href="./feedback.html"><i class="icon-envelope"></i> Feedback</a></li>
+                    </ul>
+              </li>
+              <li><a href="#" rel="popover" title="About This Thing" data-placement="bottom" data-content="This is a prototype of the CATAMI interface meant to stimulate discussion. <br><br> Have a look around and consider your workflow and preferences. <br><br>">About</a>
+              <li class="divider-vertical"></li>
+            </ul>
+
+            <p class="navbar-text pull-right">Logged in as <a href="#">username</a></p>
+            <form class="navbar-search pull-right">
+                <input type="text" class="search-query  pull-left" placeholder="Search">
+            </form>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <!--<div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span12">
+          <div id='map_container'>
+              <!-- <div style="bottom;position:absolute;z-index:10000;">
+                <p>
+                  <button class="btn btn-primary" type="button">Default button</button>
+                </p> 
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>  -->
+
+	<div class="container-fluid">
+	  <div class="row-fluid">
+	    <div id="sidebar-nav" class="span3" style="padding-left:10px;">
+	
+	      <h1>Collaborate</h1>
+	      <p class="lead">Share and compare with others.  Join the community.</p>
+	
+	      <div class="alert alert-error">
+	        <button type="button" class="close" data-dismiss="alert">x</button>
+	        <p><strong>Warning!</strong> This is just a prototype, nothing really works.</p>
+	      </div>
+	
+	      <div class="well well-small" style="align:center;">
+	        <p class="lead">Who's online?</p>
+	        <p>Just you.</p>
+          <p>0 users in the last 7 days.</p>
+
+	      </div><!--/.well -->
+	
+        <div class="well well-small" style="align:center;">
+          <p class="lead">Messages</p>
+          <p>Catami says hi!<br><small><strong>Tuesday 28 Aug 2012, 5:17pm</small></strong></p>
+
+        </div><!--/.well -->
+	    </div>
+	    <div id="content" class="span9">
+        <div class="row-fluid">
+          <button class="btn btn-mini pull-right" type="button">Edit</button> 
+          <div id="content" class="span3">
+
+            <img src="./assets/img/useravatar.jpg" class="img-polaroid" width="300" height="300">
+          </div>
+          <div id="content" class="span6">
+             <h1>Default User Person</h1>  
+
+            <p class="lead"><strong>Role/s:</strong> Developer, Data User<br>
+            <strong>Affiliation/s:</strong> iVEC, CATAMI, Curtin University</p>
+
+            <address>
+              <strong>CATAMI @ iVEC</strong><br>
+              26 Dick Perry Ave, Technology Park<br>
+              Kensington, WA 6151<br>
+              <abbr title="Phone">P:</abbr> (08) 999-9999
+            </address>
+             
+            <address>
+              <strong>Catami @ iVEC</strong><br>
+              <a href="mailto:#">catami@ivec.org</a>
+            </address>
+          </div>
+
+        </div> <!--/.row -->
+        <div class="row-fluid">
+          <h2>Your Projects</h2>
+
+          <table class="table table-bordered">
+          <tbody>
+            <tr>
+              <td><a href="./project.html" class="thumbnail"> <img src="./data/image/pilotwhale.jpg" alt="data image" width="150" height="150"></a> </td>
+              <td style="text-align:top;"><p class="lead" >Example project of something or other.  Some collection of image, analysis docs, PDFs and notes.</p><p><span class="badge badge-info">0</span> People have linked to this</p><p><span class="badge badge-info">0</span> People have commented</p><p><span class="label">Not Shared</span></p></td>
+              <td>  <button class="btn btn-primary" type="button">Share</button><br><br>
+                    <button class="btn btn-danger" type="button">Delete</button></td>
+
+            </tr>
+           <tr>
+              <td><a href="./project.html" class="thumbnail"> <img src="./data/image/turtle.jpg" alt="data image" width="150" height="150"></a> </td>
+              <td style="text-align:top;"><p class="lead" >Another example project of something or other.  Some collection of image, analysis docs, PDFs and notes.</p><p><span class="badge badge-info">0</span> People have linked to this</p><p><span class="badge badge-info">0</span> People have commented</p><p><span class="label label-warning">Shared</span></p></td>
+              <td>  <button class="btn btn-primary" type="button">Unshare</button><br><br>
+                    <button class="btn btn-danger" type="button">Delete</button></td>
+
+            </tr>
+          </tbody>
+        </table>
+        </div> <!--/.row -->
+        <div class="row-fluid">
+          <h2>Your Activity</h2>
+          <table class="table table-bordered table-striped table-condensed">
+          <tbody>
+            <tr>
+              <td>Tuesday 28 Aug 2012, 5:17pm</td><td>Started a project: "Another example project of something or other.  Some collection of image, analysis docs, PDFs and notes."</p></td><td><a class="btn btn-small btn-primary" href="./project.html">Link</a></td>
+            </tr>
+            <tr>
+              <td>Tuesday 28 Aug 2012, 5:11pm</td><td>Started a project: "Example project of something or other.  Some collection of image, analysis docs, PDFs and notes."</p></td><td> <a class="btn btn-small btn-primary" href="./project.html">Link</a></td>
+            </tr>
+            <tr>
+              <td>Tuesday 28 Aug 2012, 5:09pm</td><td>Commented on a project: "This is cool..."</p></td><td><a class="btn btn-small btn-primary" href="./project.html">Link</a></td>
+            </tr>
+          </tbody>
+        </table>
+        </div> <!--/.row -->
+
+	    </div>
+	
+	  </div>
+	</div>
+
+
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src='./assets/js/jquery-1.8.0.min.js'></script>
+    <script src='./assets/js/bootstrap.js'></script>
+    <script src="./assets/js/jquery.tools.min.js"></script>
+    <script src="./assets/js/jquery-ui-1.8.23.custom.min.js"></script>
+    
+    <!-- popover js -->
+    <script type="text/javascript">
+        (function() {
+            $("[rel=popover]").popover();
+        })();
+     </script>
+
+</body>
+</html>
